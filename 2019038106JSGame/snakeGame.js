@@ -25,9 +25,8 @@ function gameInit(){
     let gridHeight = canvas.width;
     let gridWidth = canvas.height;
     console.log("game init");
-    snake = new Snake(context);
-    context = snake.setCanvasSnakePart();
-    clearCanvas();
+    snake = new Snake();
+    snake.setCanvasSnakePart();
 }
 
 function clearCanvas() {
