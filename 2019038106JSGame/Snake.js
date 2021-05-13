@@ -1,7 +1,8 @@
 class Snake {
     parts;
     //초기 10으로 설
-    snakeLength = 10;
+    snakeMaxLength = 10;
+    snakeLength = 5;
     snakeColor = 'green';
     snakeBorder = 'black';
     context = document.getElementById("js game").getContext("2d");
@@ -16,12 +17,13 @@ class Snake {
             {x: gridWidth/2, y:gridHeight/2},
             {x: gridWidth/2 + snakeSize, y:gridHeight/2},
             {x: gridWidth/2 + snakeSize*2, y:gridHeight/2},
-            {x: gridWidth/2 + snakeSize*3, y:gridHeight/2}
+            {x: gridWidth/2 + snakeSize*3, y:gridHeight/2},
+            {x: gridWidth/2 + snakeSize*4, y:gridHeight/2}
         ];
     }
 
-    setLength(length){
-        this.snakeLength = length;
+    setLength(){
+        this.snakeLength = this.parts.length;
 
     }
 
@@ -30,12 +32,12 @@ class Snake {
     }
 
     setCanvasSnakePart(){
-        for(let i=0; i < snake.parts.length; i++){
+        for(let i=0; i < this.snakeLength; i++){
             let parts = snake.parts[i];
             context.fillStyle = this.snakeColor;
             context.strokeStyle = this.snakeBorder;
-            context.fillRect(parts.x, parts.y, this.snakeLength, this.snakeLength);
-            context.strokeRect(parts.x, parts.y, this.snakeLength, this.snakeLength);
+            context.fillRect(parts.x, parts.y, 10, 10);
+            context.strokeRect(parts.x, parts.y, 10, 10);
         }
 
     }
@@ -84,16 +86,17 @@ class Snake {
     moveSnake(){
 
 
-
         const newParts = {x : this.parts[0].x + this.moveX, y: this.parts[0].y + this.moveY};
+
         this.parts.unshift(newParts);
 
         if(isItemDestroy()){
             itemCoordX = Math.round(Math.random() *100)*10%gridWidth;
             itemCoordY = Math.round(Math.random() *100)*10%gridHeight;
             getItem();
-            score += 100;
-            itemNumber++;
+            score += (100*level);
+            this.setLength();
+            setScoreDOM();
         }else{
             this.parts.pop();
         }
@@ -107,6 +110,14 @@ class Snake {
 
     getMoveSpeed(){
         return this.moveSpeed;
+    }
+
+    setMaxLength(){
+        this.snakeMaxLength += 10;
+    }
+
+    getMaxLength(){
+        return this.snakeMaxLength;
     }
 
 

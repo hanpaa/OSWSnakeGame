@@ -17,7 +17,6 @@ Vanila JS 테트리스 게임
 </head>
 <body>
 <div class="wrapper-main">
-    <div class="over-hidden">GAME OVER</div>
     <canvas class="game-canvas" id="js game" width="300" height="300">
     </canvas>
     <div class="wrapper-info">
@@ -25,6 +24,8 @@ Vanila JS 테트리스 게임
         <div class="wrapper-score">
             <span>SCORE : </span>
             <span id="score">0</span>
+            <span>Level : </span>
+            <span id="level">1</span>
         </div>
 <!--        <div>-->
 <!--            <i ></i>-->
@@ -35,6 +36,13 @@ Vanila JS 테트리스 게임
             <button onclick="gameInit()">PLAY</button>
             <button onclick="gameEnd()">RESET</button>
         </div>
+
+        <div id="over-hidden">
+          <p id="game-over" class="over-p">
+              GAME START!
+          </p>
+        </div>
+
     </div>
 </div>
 <script>

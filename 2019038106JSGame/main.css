@@ -6,6 +6,11 @@ canvas{
     background: gray;
 }
 
-.over-hidden{
-    display: none;
+#over-hidden{
+    visibility: hidden;
 }
+
+.over-p{
+    font-size: 100px;
+}
+
