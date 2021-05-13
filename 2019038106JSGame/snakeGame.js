@@ -2,15 +2,18 @@
  * @title snakeGame.js
  * @date 2021/05/12
  * @author 2019038106 최제현
+ *
+ * snake game main 자바스크립트 파일.
+ * 게임 실행 및 종료, Html조작 등 핵심기능
  */
 
-
+// canvas 객체 및 Context
 let canvas = document.getElementById("js game");
 let context = canvas.getContext("2d");
 
 const frame = 60;
 
-//캔버스 길이
+//캔버스 길이, 높이
 let gridHeight = canvas.width;
 let gridWidth = canvas.height;
 
@@ -24,6 +27,9 @@ let itemCoordY = Math.round(Math.random() *100)*10%gridHeight;
 // 점수, 레벨 초기값
 let score = 0;
 let level = 1;
+
+//목표 점수설정 게임을 더 길게 하고싶을때 설정.
+let endLevel = 4;
 
 // interval 들어갈 자리
 let intervalId;
@@ -112,22 +118,27 @@ function getItem() {
     context.fillRect(itemCoordX, itemCoordY, 5, 5);
 }
 
-//뱀이 아이템에 접근하였는지 감지하는
+//뱀이 아이템에 접근하였는지 감지하는 함수
 function isItemDestroy() {
+    //예외처리 : 뱀의 머리가 아이템의 좌표에 닿으면 TRUE return!
     if (itemCoordX === snake.parts[0].x
         && snake.parts[0].y === itemCoordY)
         return true;
     else return false;
 }
 
+//게임이 끝나는 것을 감지하는 함수
 function isGameEnd() {
 
+    //뱀의 머리 설정
     const snakeHead = snake.parts[0];
+
     // 자신의 몸에 닿으면 게임 끝!
     for (let i = 3; i < snake.getLength(); i++) {
-        if (snake.parts[i].x === snakeHead.x && snake.parts[i].y === snakeHead.y) return true
+        if (snake.parts[i].x === snakeHead.x && snake.parts[i].y === snakeHead.y) return tre
     }
 
+    //화면 바깥 좌표에에 나간다면 게임 끝!
     if(snakeHead.x < 0
         || snakeHead.y < 0
         || snakeHead.x >= gridWidth
@@ -136,27 +147,34 @@ function isGameEnd() {
 
 }
 
+//게임이 끝났을때 초기화해 주는 코드
 function gameEnd() {
+    // 탈락시 출력!
     gameoverP.innerText = "GAME OVER!";
     gameoverP.style.color = "red";
     overDiv.style.visibility = "visible";
+    //interval 중단.
     clearInterval(intervalId);
+
+    //html DOM 초기화.
     level = 1;
     score = 0;
     scoreDOM.innerText = score;
     levelDOM.innerText = level;
+
+    //메모리 관리는 jc가 해주므로, null로 처리.
     snake = null;
 }
 
+//레벨업시
 function levelUp() {
          snake.setMaxLength();
         console.log("level UP");
-        //레벨업시 속도 20프로 증
-
+        //레벨업시 속도 증가 해주는 코드.
             snake.setMoveSpeed(snake.getMoveSpeed()-40);
         level++;
-    if(level === 4){
-        // 게임 승리! 30개 먹었을때.
+    if(level === endLevel){
+        // 게임 승리! 10 * (endLevel-1)이 초하였을때. 예) endlevel 4일 때, 몸통 길이가 31이면 종료!
 
         gameEnd();
         gameoverP.style.color = "blue"
@@ -164,20 +182,16 @@ function levelUp() {
 
 
     }
+    // html 로 현재레벨 표시
         setScoreDOM();
         }
 
 function setScoreDOM() {
 
-
+//마지막 Level 도달시 MAX로 표시.
     scoreDOM.innerText = score;
-    if(level > 2) levelDOM.innerText = "MAX";
+    if(level > endLevel-2) levelDOM.innerText = "MAX";
         else levelDOM.innerText = level;
-
-
-
-
-
 
 }
 
