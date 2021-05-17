@@ -139,8 +139,8 @@ function isGameEnd() {
     const snakeHead = snake.parts[0];
 
     // 자신의 몸에 닿으면 게임 끝!
-    for (let i = 3; i < snake.getLength(); i++) {
-        if (snake.parts[i].x === snakeHead.x && snake.parts[i].y === snakeHead.y) return tre
+    for (let i = 1; i < snake.getLength(); i++) {
+        if (snake.parts[i].x === snakeHead.x && snake.parts[i].y === snakeHead.y) return gameEnd;
     }
 
     //화면 바깥 좌표에에 나간다면 게임 끝!
@@ -179,7 +179,7 @@ function levelUp() {
         //레벨업시 속도 증가 해주는 코드.
         snake.setMoveSpeed(snake.getMoveSpeed()*0.9);
         level++;
-        
+
         //레벨업시 인터벌 속도 증가하여 다시생성
         clearInterval(intervalId);
         game();
