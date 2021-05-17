@@ -29,7 +29,7 @@ let score = 0;
 let level = 1;
 
 //목표 점수설정 게임을 더 길게 하고싶을때 설정.
-let endLevel = 4;
+let endLevel = 7;
 
 // interval 들어갈 자리
 let intervalId;
@@ -61,7 +61,7 @@ function gameInit(){
     //snake 렌더링
     snake.setCanvasSnakePart();
 
-    //방향키 입력감
+    //방향키 입력감지
     snake.detectChangeDirection();
 
     //interval 초기화
@@ -71,6 +71,10 @@ function gameInit(){
     overDiv.style.visibility = "hidden";
 
 
+    game();
+}
+
+function game() {
     // 실질적으로 게임을 실행하는 부분.
     // Snake 클래스의 movespeed 속도로, 계속해서 뱀을 움직여줌.
     intervalId = setInterval(()=>{
@@ -94,6 +98,7 @@ function gameInit(){
         }
 
     },snake.getMoveSpeed())
+
 }
 
 //캔버스를 초기화 하는 함수
@@ -168,11 +173,17 @@ function gameEnd() {
 
 //레벨업시
 function levelUp() {
+    //뱀의 최대길이 증가.
          snake.setMaxLength();
         console.log("level UP");
         //레벨업시 속도 증가 해주는 코드.
-            snake.setMoveSpeed(snake.getMoveSpeed()-40);
+        snake.setMoveSpeed(snake.getMoveSpeed()*0.9);
         level++;
+        
+        //레벨업시 인터벌 속도 증가하여 다시생성
+        clearInterval(intervalId);
+        game();
+
     if(level === endLevel){
         // 게임 승리! 10 * (endLevel-1)이 초하였을때. 예) endlevel 4일 때, 몸통 길이가 31이면 종료!
 

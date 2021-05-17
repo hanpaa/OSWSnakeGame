@@ -20,7 +20,7 @@ class Snake {
     context = document.getElementById("js game").getContext("2d");
 
     //ms 단위 숫자가 낮을수록 속도가 빨라짐.
-    moveSpeed = 200;
+    moveSpeed = 500;
     //뱀 이동 초기값. 왼쪽으로 이동함.
     moveX = -10;
     moveY = 0;
